@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <title>AshwinBhai Bhuva - Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css" />
+  <!-- SheetJS (XLSX) - required for export & import -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">AshwinBhai</div>
+    <div class="nav-links">
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#products">See Products</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section id="hero" class="hero">
+    <h1>Welcome - AshwinBhai Bhuva</h1>
+  </section>
+
+  <section id="about">
+    <div class="profile-box">
+      <h2 style="text-align:center; color:#eaf8f4; margin-bottom:14px;">About Me</h2>
+
+      <div class="profile-info">
+        <div class="info-card">
+          <h3>Email</h3>
+          <p><a href="mailto:parthhardware1813@gmail.com" style="color:#eaf8f4; text-decoration:underline;">parthhardware1813@gmail.com</a></p>
+        </div>
+        <div class="info-card">
+          <h3>Phone</h3>
+          <p>‪+91 9879555597‬<br>‪+91 9898551813‬</p>
+        </div>
+        <div class="info-card">
+          <h3>Company</h3>
+          <p>Parth Hardware & Steel</p>
+        </div>
+        <div class="info-card">
+          <h3>Position</h3>
+          <p>Head Of Parth Hardware & Steel</p>
+        </div>
+        <div class="info-card">
+          <h3>Location</h3>
+          <p><a href="https://maps.app.goo.gl/oHkn38Nucs1Q7KU88" target="_blank" style="color:#eaf8f4; text-decoration:underline;">Live Location</a><br>Tapsvi School, Rajkot</p>
+        </div>
+        <div class="info-card">
+          <h3>Social</h3>
+          <p>
+            <a href="https://wa.me/919879555597" target="_blank" style="color:#eaf8f4; margin-right:12px;"><i class="fab fa-whatsapp" style="font-size:20px;"></i></a>
+            <a href="https://instagram.com/yourhandle" target="_blank" style="color:#eaf8f4;"><i class="fab fa-instagram" style="font-size:20px;"></i></a>
+          </p>
+        </div>
+      </div>
+      <p style="text-align:center; color:#eaf8f4; max-width:900px; margin: 0 auto;">
+        Experienced with expertise in distribution of Cement and Chemicals. Passionate about helping customers choose the right products.
+      </p>
+      <div style="text-align:center; margin-top:16px;">
+        <button class="btn" type="button" onclick="openModal()">View More Details</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="products">
+    <div class="section-heading">Products & Business Entry</div>
+
+    <div class="top-buttons-bar">
+      <button type="button" class="export-btn" id="exportBtn" onclick="exportData()">Export to Excel</button>
+      <button type="button" class="view-btn" id="viewBtn" onclick="viewData()">View Stored Data</button>
+    </div>
+
+    <div id="dataCountDisplay" class="data-count-display">📊 Stored Entities: <strong style="color:#e74c3c;">0</strong></div>
+
+    <div class="form-wrapper">
+
+      <div class="bulk-import-card">
+        <h3 style="margin-bottom:15px; font-size:24px; text-align:center;">Bulk Import from Excel</h3>
+        <p style="text-align:center; margin-bottom:20px; opacity:0.95;">Upload Excel file with all your business data at once.</p>
+
+        <div class="bulk-import-inner">
+          <div style="margin-bottom:15px;">
+            <label class="field-label">Excel File *</label>
+            <input type="file" id="bulkExcelFile" accept=".xlsx,.xls">
+          </div>
+
+          <button type="button" class="action-btn" onclick="doBulkImport()">Import Entries</button>
+
+          <div style="margin-top:15px; padding:12px; background:#e8f4f8; border-radius:8px; border-left:4px solid #3498db; color:#2c3e50; font-size:13px;">
+            <strong>Excel Format:</strong><br>
+            Headers: Category, Type, Firm Name, Owner Name, Mobile, Address, GST, PAN, Products, Email, DOB, Anniversary
+          </div>
+
+          <div id="bulkImportStatus" style="display:none; margin-top:15px;"></div>
+        </div>
+      </div>
+
+      <form id="selectionForm" class="form-card">
+        <h3 style="margin-bottom:8px; color:#2c3e50;">Individual Entry</h3>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+          <label class="field-label" style="margin-bottom:0;">Mode</label>
+          <div>
+            <button type="button" class="mode-btn" id="retailBtn" onclick="selectRetail()">Retail</button>
+            <button type="button" class="mode-btn" id="projectBtn" onclick="selectProject()">Project</button>
+          </div>
+        </div>
+
+        <label class="field-label">Category</label>
+        <select id="category" onchange="updateTypes()">
+          <option value="">-- Select Category --</option>
+          <option value="contractor">Contractor</option>
+          <option value="customer">Customer</option>
+          <option value="dealer">Dealer</option>
+          <option value="architect">Architect</option>
+          <option value="aggregate">Aggregate</option>
+        </select>
+
+        <label class="field-label" style="margin-top:12px;">Type</label>
+        <select id="type">
+          <option value="">-- Select Type --</option>
+        </select>
+
+        <button type="button" class="action-btn" onclick="goToForm()">Next</button>
+        <div id="output" style="display:none;"></div>
+      </form>
+
+      <form id="stockForm" class="form-card" style="display:none;">
+        <h3 style="margin-bottom:8px; color:#2c3e50;">Business Details</h3>
+        <div id="selectedInfo" style="margin-bottom:10px; color:#2c3e50; font-weight:600;"></div>
+
+        <label class="field-label">Firm Name</label>
+        <input type="text" id="firmName" />
+
+        <label class="field-label" style="margin-top:12px;">Owner Name</label>
+        <input type="text" id="ownerName" />
+
+        <label class="field-label" style="margin-top:12px;">Mobile</label>
+        <input type="tel" id="ownerMobile" maxlength="10" />
+
+        <label class="field-label" style="margin-top:12px;">Address</label>
+        <input type="text" id="businessAddress" />
+
+        <label class="field-label" style="margin-top:12px;">GST</label>
+        <input type="text" id="gstNumber" />
+
+        <label class="field-label" style="margin-top:12px;">PAN</label>
+        <input type="text" id="pannumber" />
+
+        <label class="field-label" style="margin-top:12px;">Products</label>
+        <input type="text" id="industryType" />
+
+        <label class="field-label" style="margin-top:12px;">Email</label>
+        <input type="email" id="email" />
+
+        <div class="row" style="margin-top:15px;">
+          <div style="flex:1;">
+            <label class="field-label">Birth Date</label>
+            <input type="date" id="birthDate" />
+          </div>
+          <div style="flex:1;">
+            <label class="field-label">Anniversary</label>
+            <input type="date" id="anniversaryDate" />
+          </div>
+        </div>
+
+        <button type="button" class="action-btn" onclick="doSave()">Save Entry</button>
+      </form>
+
+      <section id="step3" class="form-card" style="display:none;">
+        <h3 style="color:#2c3e50;">Success!</h3>
+        <div id="finalSummary" style="margin: 12px 0; background: #f4f7f8; padding: 12px; border-radius: 8px;"></div>
+        <button class="action-btn small" onclick="newEntry()">New Entry</button>
+      </section>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Get In Touch</h2>
+    <p style="margin-top:8px;">Ready to discuss deals, opportunities or need advice?</p>
+    <p style="margin-top:12px;">Email: <a href="mailto:parthhardware1813@gmail.com" style="color:#fff; text-decoration:underline;">parthhardware1813@gmail.com</a></p>
+  </section>
+
+  <footer>© 2025 AshwinBhai Bhuva. All rights reserved.</footer>
+
+  <div id="myModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2 id="modalTitle" style="margin-bottom:10px; color:#2c3e50;">Professional Details</h2>
+
+      <div class="modal-tabs">
+        <button class="tab-btn active" onclick="switchTab('exp', this)">Experience</button>
+        <button class="tab-btn" onclick="switchTab('per', this)">Personal</button>
+        <button class="tab-btn" onclick="switchTab('ach', this)">Achievements</button>
+      </div>
+
+      <div id="exp" class="tab-content active">
+        <h3>Professional Experience</h3>
+        <ul style="margin:12px 0; padding-left:18px;">
+          <li>Senior Dealer who can give solutions</li>
+          <li>Working with top companies</li>
+        </ul>
+      </div>
+
+      <div id="per" class="tab-content">
+        <h3>Personal Details</h3>
+        <ul style="margin:12px 0; padding-left:18px;">
+          <li>Birthdate: 01/01/1985</li>
+          <li>Anniversary: 01/01/2010</li>
+          <li>GST: 000000000000</li>
+          <li>PAN: AAKHA8166P</li>
+        </ul>
+      </div>
+
+      <div id="ach" class="tab-content">
+        <h3>Key Achievements</h3>
+        <ul style="margin:12px 0; padding-left:18px;">
+          <li>Premium products topper</li>
+          <li>Achieved best annual returns</li>
+          <li>Published 25+ market research reports</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="entriesModal" aria-hidden="true" role="dialog" aria-labelledby="entriesTitle">
+    <div class="entries-modal-content">
+      <span onclick="closeModal2()" style="position:absolute; top:10px; right:16px; font-size:24px; cursor:pointer;">&times;</span>
+      <h2 id="entriesTitle" style="margin-bottom:20px; color:#2c3e50;">Stored Entries - Select Filter</h2>
+
+      <div class="filter-buttons">
+        <button type="button" class="filter-btn all" onclick="showAll()">All</button>
+        <button type="button" class="filter-btn retail" onclick="showRetail()">Retail</button>
+        <button type="button" class="filter-btn project" onclick="showProject()">Project</button>
+        <button type="button" class="filter-btn delete-all" onclick="deleteAllEntries()">🗑 Delete All</button>
+      </div>
+
+      <div id="entriesContainer" style="margin-top:20px;"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
